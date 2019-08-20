@@ -16,3 +16,16 @@ script: "./gradlew clean build"
 
 after_success:
   - ./gradlew jacocoTestReport coveralls
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: api.inzido.co.kr
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: public_read
+    wait-until-deployed: true
+    on:
+      repo: ws2cool/open-inzido
+      branch: master
